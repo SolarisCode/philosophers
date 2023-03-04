@@ -6,7 +6,7 @@
 /*   By: melkholy <melkholy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:57:12 by melkholy          #+#    #+#             */
-/*   Updated: 2023/02/17 19:15:56 by melkholy         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:49:10 by melkholy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int	ft_one_philo(t_philo *philo)
 int	ft_eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->spoon->lock);
-	philo->right_fork = ft_current_time();
 	if (ft_one_philo(philo))
 		pthread_mutex_lock(&philo->spoon->next->lock);
-	philo->left_fork = ft_current_time();
 	if (ft_check_status(philo) || ft_check_time(philo))
 	{
 		pthread_mutex_unlock(&philo->spoon->lock);
@@ -36,8 +34,8 @@ int	ft_eating(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_lock(&philo->st_death->pt_lock);
-	printf("%ld %d has taken a fork\n", philo->right_fork, philo->id);
-	printf("%ld %d has taken a fork\n", philo->left_fork, philo->id);
+	printf("%ld %d has taken a fork\n", ft_current_time(), philo->id);
+	printf("%ld %d has taken a fork\n", ft_current_time(), philo->id);
 	printf("%ld %d is eating\n", ft_current_time(), philo->id);
 	philo->start_time = ft_current_time();
 	pthread_mutex_unlock(&philo->st_death->pt_lock);
